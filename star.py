@@ -12,14 +12,11 @@ from google.appengine.api import urlfetch
 import codecs
 import sys
 
-# Set the fetch deadline 
-urlfetch.set_default_fetch_deadline(60)
-
 class MainHandler(webapp2.RequestHandler):
 
   def get(self):
     # Download xml from Keolis :
-    xml = urlfetch.fetch('http://data.keolis-rennes.com/xml/?cmd=getbusnextdepartures&version=2.1&key=HWXEIBF8HJPVPHE&param[mode]=stop&param[direction][]=1&param[stop][]=1160')
+    xml = urlfetch.fetch('http://data.keolis-rennes.com/xml/?cmd=getbusnextdepartures&version=2.1&key=HWXEIBF8HJPVPHE&param[mode]=stop&param[direction][]=1&param[stop][]=1160', deadline=60)
     dom = parseString(xml.content)
     
     #Get the Star time from the data tag in XML 
