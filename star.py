@@ -8,16 +8,25 @@
 import webapp2
 from datetime import datetime
 from xml.dom.minidom import parseString
-from google.appengine.api import urlfetch
+#from google.appengine.api import urlfetch
 import codecs
 import sys
+import urllib2
 
 class MainHandler(webapp2.RequestHandler):
 
   def get(self):
     # Download xml from Keolis :
-    xml = urlfetch.fetch('http://data.keolis-rennes.com/xml/?cmd=getbusnextdepartures&version=2.1&key=HWXEIBF8HJPVPHE&param[mode]=stop&param[direction][]=1&param[stop][]=1160', deadline=60)
-    dom = parseString(xml.content)
+    keolis_url = 'http://data.keolis-rennes.com/xml/?cmd=getbusnextdepartures&version=2.1&key=HWXEIBF8HJPVPHE&param[mode]=stop&param[direction][]=1&param[stop][]=1160'
+    #xml_response = urlfetch.fetch(keolis_url, deadline=60)
+    #xml = xml.response
+    try:
+    	xml_response = urllib2.urlopen(keolis_url, timeout=100)
+    	xml = xml_response.read()
+    except urllib2.URLError, e:
+    	handleError(e)
+    	
+    dom = parseString(xml)
     
     #Get the Star time from the data tag in XML 
     data_tag = dom.getElementsByTagName('data')
