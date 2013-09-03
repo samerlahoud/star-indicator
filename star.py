@@ -21,7 +21,7 @@ class MainHandler(webapp2.RequestHandler):
     #xml_response = urlfetch.fetch(keolis_url, deadline=60)
     #xml = xml.response
     try:
-    	xml_response = urllib2.urlopen(keolis_url, timeout=100)
+    	xml_response = urllib2.urlopen(keolis_url, timeout=120)
     	xml = xml_response.read()
     except urllib2.URLError, e:
     	handleError(e)
