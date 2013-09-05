@@ -32,7 +32,7 @@ class MainHandler(webapp2.RequestHandler):
     data_tag = dom.getElementsByTagName('data')
     star_time = data_tag[0].attributes["localdatetime"].value[11:-9]
     
-    self.response.write("<h2>Il est %s &agrave; Beaulieu Tournebride</h2>" %star_time)
+    self.response.write("<h3>Il est %s &agrave; Beaulieu Tournebride</h3>" %star_time)
 	
 	# Navigate through bus lines (stopline) and rounds (route)
     for stopline in dom.getElementsByTagName('stopline'):
@@ -52,7 +52,8 @@ class MainHandler(webapp2.RequestHandler):
 			# Get the time delta and the destination headsign
 			time_to_run = datetime.strptime(bus_time, "%H:%M") - datetime.strptime(star_time, "%H:%M")
 			destination = departure.attributes["headsign"].value
-			self.response.write("<h3>L%s vers %s &agrave; %s -- dans %s min</h3>" %(bus, destination, bus_time, int(time_to_run.total_seconds()/60)))
+			accuracy = departure.attributes["accurate"].value
+			self.response.write("<h4>L%s vers %s &agrave; %s -- dans %s min %s</h4>" %(bus, destination, bus_time, int(time_to_run.total_seconds()/60), "*" if accuracy == "1" else ""))
             
 app = webapp2.WSGIApplication([
   ('/.*', MainHandler),
