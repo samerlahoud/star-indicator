@@ -17,7 +17,7 @@ class MainHandler(webapp2.RequestHandler):
 
   def get(self):
     # Download xml from Keolis :
-    keolis_url = 'http://data.keolis-rennes.com/xml/?cmd=getbusnextdepartures&version=2.1&key=HWXEIBF8HJPVPHE&param[mode]=stop&param[direction][]=1&param[stop][]=1160'
+    keolis_url = 'http://data.keolis-rennes.com/xml/?cmd=getbusnextdepartures&version=2.1&key=UQ24KM4DB4U8E4O&param[mode]=stop&param[direction][]=1&param[stop][]=1160'
     #xml_response = urlfetch.fetch(keolis_url, deadline=60)
     #xml = xml.response
     try:
